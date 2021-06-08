@@ -1,24 +1,29 @@
 // define variable for apiKey and endpoint so its easier
 var api_key = "3870f0a27cb3db5d0e47646b3e356296";
+var formInput = document.querySelector("#user-form");
+// convert Kelvin to Farhenheit
+// var kelvinWeather = currentCityWeatherName.main.temp;
+// var newTemp = (((kelvinWeather-273.15)*9)/5) + 32;
 
 // fetch Weather Data
 
-var formInput = document.querySelector("#user-form");
+
 formInput.addEventListener("submit", function (event) {
   event.preventDefault();
+  var formValue = event.target[0].value;
   if(formValue){
       getWeather(formValue);
       } else {
           alert("Enter Something!!!")
       }
-  var formValue = event.target[0].value;
   console.log(formValue);
   getWeather(formValue);
 });
 
+
+
 function getWeather(formValue) {
   var endPoint = `https://api.openweathermap.org/data/2.5/weather?q=${formValue}&appid=${api_key}`;
-
   var currentCityWeatherName;
   fetch(endPoint)
     .then((response) => response.json())
@@ -28,9 +33,6 @@ function getWeather(formValue) {
       console.log(currentCityWeatherName);
       addWeatherData(currentCityWeatherName);
     });
-}
-
-var fahrenheitToCelsius = fahrenheit => (fahrenheit - 32) * 5/9;
 
 // var currentDate;
 // fetch(endPoint)
@@ -51,14 +53,16 @@ function addWeatherData(currentCityWeatherName) {
   var weatherEl = document.querySelector(".weatherEl");
   weatherEl.textContent = currentCityWeatherName.name;
 
-  weatherEl.append(`
-    ${currentCityWeatherName.main.temp}℉
+  weatherEl.append
+    (`${currentCityWeatherName.main.temp}ºF 
+
 
     ${currentCityWeatherName.wind.speed}MPH
 
-    ${currentCityWeatherName.main.humidity}%`)
 
-  
+    ${currentCityWeatherName.main.humidity}%`);
+
+}
 
 
   // var weatherDateEl = document.querySelector(".weatherDateEl");
