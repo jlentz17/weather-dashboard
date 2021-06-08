@@ -44,9 +44,12 @@ function addWeatherData(currentCityWeatherName) {
   var weatherEl = document.querySelector(".weatherEl");
   weatherEl.textContent = currentCityWeatherName.name;
 
-  weatherEl.append(currentCityWeatherName.main.temp, currentCityWeatherName.main.humidity, currentCityWeatherName.weather[0].description)
-  weatherEl.append(currentCityWeatherName.weather[0].description)
-  weatherEl.append(currentCityWeatherName.weather[0].description)
+  weatherEl.append(`
+    ${currentCityWeatherName.main.temp}℉
+
+    ${currentCityWeatherName.wind.speed}MPH
+
+    ${currentCityWeatherName.main.humidity}%`)
 
   
 
