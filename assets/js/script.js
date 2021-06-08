@@ -6,6 +6,11 @@ var api_key = "3870f0a27cb3db5d0e47646b3e356296";
 var formInput = document.querySelector("#user-form");
 formInput.addEventListener("submit", function (event) {
   event.preventDefault();
+  if(formValue){
+      getWeather(formValue);
+      } else {
+          alert("Enter Something!!!")
+      }
   var formValue = event.target[0].value;
   console.log(formValue);
   getWeather(formValue);
@@ -24,6 +29,8 @@ function getWeather(formValue) {
       addWeatherData(currentCityWeatherName);
     });
 }
+
+var fahrenheitToCelsius = fahrenheit => (fahrenheit - 32) * 5/9;
 
 // var currentDate;
 // fetch(endPoint)
