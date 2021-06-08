@@ -1,29 +1,28 @@
 // define variable for apiKey and endpoint so its easier
 var api_key = "3870f0a27cb3db5d0e47646b3e356296";
-var endPoint= `https://api.openweathermap.org/data/2.5/weather?q=${formValue}&appid=${api_key}`
-
-var formValue;
 
 // fetch Weather Data
 
-function getWeather() {
-var currentCityWeatherName;
-fetch(endPoint)
-.then((response)=> response.json()) 
-.then(function(weather){
-console.log(weather)
-console.log(currentCityWeatherName);
-addWeatherData(currentCityWeatherName)
+var formInput = document.querySelector("#user-form");
+formInput.addEventListener("submit", function (event) {
+  event.preventDefault();
+  var formValue = event.target[0].value;
+  console.log(formValue);
+  getWeather(formValue);
 });
 
-var formInput = document.querySelector("#user-form");
-    formInput.addEventListener("submit", function(event){
-        event.preventDefault();
-        formValue = event.target[0].value;
-        console.log(formValue);
-        getWeather();
-    })
-    
+function getWeather(formValue) {
+  var endPoint = `https://api.openweathermap.org/data/2.5/weather?q=${formValue}&appid=${api_key}`;
+
+  var currentCityWeatherName;
+  fetch(endPoint)
+    .then((response) => response.json())
+    .then(function (weather) {
+        currentCityWeatherName = weather;
+      console.log(weather);
+      console.log(currentCityWeatherName);
+      addWeatherData(currentCityWeatherName);
+    });
 }
 
 // var currentDate;
@@ -41,12 +40,19 @@ var formInput = document.querySelector("#user-form");
 // // weatherEl.innerText()
 // });
 
-function addWeatherData(currentCityWeatherName){
-var weatherEl = document.querySelector(".weatherEl");
-weatherEl.textContent = currentCityWeatherName;
-// var weatherDateEl = document.querySelector(".weatherDateEl");
-// weatherDateEl.textContent = currentDate
+function addWeatherData(currentCityWeatherName) {
+  var weatherEl = document.querySelector(".weatherEl");
+  weatherEl.textContent = currentCityWeatherName.name;
+
+  weatherEl.append(currentCityWeatherName.main.temp, currentCityWeatherName.main.humidity, currentCityWeatherName.weather[0].description)
+  weatherEl.append(currentCityWeatherName.weather[0].description)
+  weatherEl.append(currentCityWeatherName.weather[0].description)
+
+  
+
+
+  // var weatherDateEl = document.querySelector(".weatherDateEl");
+  // weatherDateEl.textContent = currentDate
 }
 // getWeather();
 // console.log(document);
-
