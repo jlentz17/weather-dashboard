@@ -1,6 +1,7 @@
 // define variable for apiKey and endpoint so its easier
 var api_key = "3870f0a27cb3db5d0e47646b3e356296";
 var formInput = document.querySelector("#user-form");
+var cityInput = document.querySelector("#cityInput")
 // convert Kelvin to Farhenheit
 
 
@@ -15,8 +16,8 @@ formInput.addEventListener("submit", function (event) {
     if (formValue) {
         getWeather(formValue);
         
-        //   Don't know how to make this line work
-        formValue.value = "";
+        //   Don't know how to make this line work, and NOW I figured it out! I just had to match the id and target the variable at the top(#cityInput)
+        cityInput.value = "";
     } else {
         alert("Enter Something!!!");
     }
@@ -31,8 +32,8 @@ function getWeather(formValue) {
     .then((response) => response.json())
     .then(function (weather) {
         currentCityWeatherName = weather;
-        console.log(weather);
-        console.log(currentCityWeatherName);
+        // console.log(weather);
+        // console.log(currentCityWeatherName);
         addWeatherData(currentCityWeatherName);
     });
     
