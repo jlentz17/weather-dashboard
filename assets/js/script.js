@@ -40,6 +40,8 @@ function getWeather(formValue) {
       var iconSource = `https://openweathermap.org/img/wn/${icon}@2x.png`;
       var img = document.createElement("img");
       img.setAttribute("src", iconSource);
+      // console.log(weather);
+      // console.log(currentCityWeatherName);
       fetch(
         `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${api_key}`
       )
@@ -48,12 +50,10 @@ function getWeather(formValue) {
         })
         .then(function (data) {
           weatherCards(data);
-          var uvIndex = daily.uvi;
-          console.log(uvIndex);
-          uvIndex.textContent = uvIndex;
+          var uvIndex = current.uvi;
+          console.log(lat);
+          uvIndex.textContent = current.uvi;
         });
-      // console.log(weather);
-      // console.log(currentCityWeatherName);
       addWeatherData(currentCityWeatherName);
     });
   // var currentDate;
@@ -81,6 +81,8 @@ function getWeather(formValue) {
       Math.round(currentCityWeatherName.wind.speed) + "MPH";
     cityHumidity.textContent = currentCityWeatherName.main.humidity + "%";
     // uvi.textContent = lat;
+
+    uvi.textContent = current.uvi
   }
   // var weatherDateEl = document.querySelector(".weatherDateEl");
   // weatherDateEl.textContent = currentDate
@@ -102,11 +104,20 @@ function weatherCards(data) {
     humidity.textContent = day.humidity;
     card.append(humidity);
     // wind
-    var wind = document.createElement("div");
+    var wind = document.createElement("h3");
     wind.textContent = day.wind_speed;
     card.append(wind);
+    forecastContainer.append(card);
+    // uv index
+    uvIndex = document.createElement("h3");
+    uvIndex.textContent = day.uvi;
+    card.append(uvIndex);
     forecastContainer.append(card);
   }
 }
 // getWeather();
 // console.log(document);
+
+
+// if uvi < uvi.classlist.add()
+// then append
