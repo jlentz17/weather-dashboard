@@ -34,7 +34,6 @@ function getWeather(formValue) {
     .then(function (weather) {
       currentCityWeatherName = weather;
       var lat = weather.coord.lat;
-      console.log(lat);
       var lon = weather.coord.lon;
       var icon = weather.weather[0].icon;
       var iconSource = `https://openweathermap.org/img/wn/${icon}@2x.png`;
@@ -45,14 +44,16 @@ function getWeather(formValue) {
       fetch(
         `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${api_key}`
       )
+      
         .then(function (response) {
           return response.json();
         })
         .then(function (data) {
           weatherCards(data);
-          var uvIndex = current.uvi;
-          console.log(lat);
-          uvIndex.textContent = current.uvi;
+          console.log(uvI);
+          var uvI = data.current.uvi;
+          // uvIndex.textContent = lat;
+          uvIndex.textContent = uvI;
         });
       addWeatherData(currentCityWeatherName);
     });
@@ -76,43 +77,44 @@ function getWeather(formValue) {
     // console.log(kelvinWeather)
     // How to make multiple lines???? I've tried commas, spaces, /n... and the data is all next to each other. Please help THX!!
     cityName.textContent = currentCityWeatherName.name;
-    cityTemp.textContent = newTemp + "ºF";
+    cityTemp.textContent = "Temperature: " + newTemp + " ºF";
     cityWind.textContent =
-      Math.round(currentCityWeatherName.wind.speed) + "MPH";
-    cityHumidity.textContent = currentCityWeatherName.main.humidity + "%";
-    // uvi.textContent = lat;
-
-    uvi.textContent = current.uvi
+      "Wind Speed: " + Math.round(currentCityWeatherName.wind.speed) + "MPH";
+    cityHumidity.textContent = "Humidity: " + currentCityWeatherName.main.humidity + "%";
   }
   // var weatherDateEl = document.querySelector(".weatherDateEl");
   // weatherDateEl.textContent = currentDate
 }
 function weatherCards(data) {
-  console.log(data);
+  // console.log(data.current.uvi);
   for (var i = 0; i < 5; i++) {
     var day = data.daily[i];
-    console.log(day);
+    // console.log(day);
     var card = document.createElement("div");
     // Do the same for all of these and add styling and labels!!
     var newTemp = document.createElement("h3");
-    newTemp.textContent = day.temp.day;
+  
+
+    var kelvinWeather = day.temp.day;
+    var newRightTemp = Math.floor(((kelvinWeather - 273.15) * 9) / 5) + 32;
+
+    newTemp.textContent = "Temperature: " + newRightTemp + "℉";
+     // console.log(newRightTemp)
     card.append(newTemp);
-    var kelvinWeather = currentCityWeatherName.main.temp;
-    var newTemp = Math.floor(((kelvinWeather - 273.15) * 9) / 5) + 32;
-    // humidity
-    var humidity = document.createElement("h3");
-    humidity.textContent = day.humidity;
-    card.append(humidity);
     // wind
     var wind = document.createElement("h3");
-    wind.textContent = day.wind_speed;
+    wind.textContent = "Wind Speed: " + day.wind_speed + "MPH";
     card.append(wind);
+    // humidity
+    var humidity = document.createElement("h3");
+    humidity.textContent = day.humidity + "%";
+    card.append(humidity);
     forecastContainer.append(card);
     // uv index
-    uvIndex = document.createElement("h3");
-    uvIndex.textContent = day.uvi;
-    card.append(uvIndex);
-    forecastContainer.append(card);
+    // uvIndex = document.createElement("h3");
+    // uvIndex.textContent = day.uvi;
+    // card.append(uvIndex);
+    // forecastContainer.append(card);
   }
 }
 // getWeather();
