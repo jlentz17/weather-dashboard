@@ -10,6 +10,7 @@ var forecastContainer = document.querySelector(".forecastContainer");
 var uvIndex = document.querySelector(".uvi");
 var lat;
 var lon;
+var img;
 // convert Kelvin to Farhenheit
 // Clear local storage after page reload
 localStorage.clear();
@@ -32,12 +33,13 @@ function getWeather(formValue) {
   fetch(endPoint)
     .then((response) => response.json())
     .then(function (weather) {
+      console.log(weather)
       currentCityWeatherName = weather;
       var lat = weather.coord.lat;
       var lon = weather.coord.lon;
       var icon = weather.weather[0].icon;
       var iconSource = `https://openweathermap.org/img/wn/${icon}@2x.png`;
-      var img = document.createElement("img");
+      img = document.createElement("img");
       img.setAttribute("src", iconSource);
       // console.log(weather);
       // console.log(currentCityWeatherName);
@@ -50,10 +52,11 @@ function getWeather(formValue) {
         })
         .then(function (data) {
           weatherCards(data);
+          console.log(data)
           console.log(uvI);
           var uvI = data.current.uvi;
           // uvIndex.textContent = lat;
-          uvIndex.textContent = uvI;
+          uvIndex.textContent = "UV Index: "+ uvI;
         });
       addWeatherData(currentCityWeatherName);
     });
@@ -107,8 +110,10 @@ function weatherCards(data) {
     card.append(wind);
     // humidity
     var humidity = document.createElement("h3");
-    humidity.textContent = day.humidity + "%";
+    console.log(img)
+    humidity.textContent = "Humidity: " + day.humidity + "%";
     card.append(humidity);
+    card.append(img);
     forecastContainer.append(card);
     // uv index
     // uvIndex = document.createElement("h3");
