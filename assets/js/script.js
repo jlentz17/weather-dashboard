@@ -12,14 +12,15 @@ var lat;
 var lon;
 var img;
 // convert Kelvin to Farhenheit
-// Clear local storage after page reload
-localStorage.clear();
 // fetch Weather Data
 formInput.addEventListener("submit", function (event) {
   event.preventDefault();
   var formValue = event.target[0].value.trim();
   if (formValue) {
+    searchHistory.push(formValue);
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
     getWeather(formValue);
+    generateBtns();
     // Don't know how to make this line work, and NOW I figured it out! I just had to match the id and target the variable at the top(#cityInput)
     cityInput.value = "";
   } else {
@@ -122,6 +123,32 @@ function weatherCards(data) {
     // forecastContainer.append(card);
   }
 }
+
+var searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || 
+[];
+
+function generateBtns(){
+  document.querySelector(".container").innerHTML = ""
+  for (let i= 0; i < searchHistory.length; i++){
+    var searchBtn = document.createElement("div")
+    searchBtn.textContent = searchHistory[i]
+    searchBtn.addEventListener("click", function(){
+      getWeather(this.textContent)
+    })
+    document.querySelector(".container").append(searchBtn)
+
+  }
+
+}
+
+// function searchHistoryBtn(){
+//   searchHistoryBtn.addEventListener("click", ){
+
+//   }
+// }
+
+generateBtns();
+
 // getWeather();
 // console.log(document);
 
