@@ -29,12 +29,12 @@ formInput.addEventListener("submit", function (event) {
   getWeather(formValue);
 });
 var currentCityWeatherName;
+
 function getWeather(formValue) {
   var endPoint = `https://api.openweathermap.org/data/2.5/weather?q=${formValue}&appid=${api_key}`;
   fetch(endPoint)
     .then((response) => response.json())
     .then(function (weather) {
-      console.log(weather)
       currentCityWeatherName = weather;
       var lat = weather.coord.lat;
       var lon = weather.coord.lon;
@@ -53,8 +53,6 @@ function getWeather(formValue) {
         })
         .then(function (data) {
           weatherCards(data);
-          console.log(data)
-          console.log(uvI);
           var uvI = data.current.uvi;
           // uvIndex.textContent = lat;
           uvIndex.textContent = "UV Index: "+ uvI;
@@ -90,7 +88,7 @@ function getWeather(formValue) {
   // weatherDateEl.textContent = currentDate
 }
 function weatherCards(data) {
-  // console.log(data.current.uvi);
+  forecastContainer.innerHTML = "";
   for (var i = 0; i < 5; i++) {
     var day = data.daily[i];
     // console.log(day);
@@ -115,7 +113,7 @@ function weatherCards(data) {
     humidity.textContent = "Humidity: " + day.humidity + "%";
     card.append(humidity);
     card.append(img);
-    forecastContainer.append(card);
+    forecastContainer.append(card)
     // uv index
     // uvIndex = document.createElement("h3");
     // uvIndex.textContent = day.uvi;
@@ -130,10 +128,12 @@ var searchHistory = JSON.parse(localStorage.getItem("searchHistory")) ||
 function generateBtns(){
   document.querySelector(".container").innerHTML = ""
   for (let i= 0; i < searchHistory.length; i++){
-    var searchBtn = document.createElement("div")
+    var searchBtn = document.createElement("button")
     searchBtn.textContent = searchHistory[i]
     searchBtn.addEventListener("click", function(){
+
       getWeather(this.textContent)
+
     })
     document.querySelector(".container").append(searchBtn)
 
