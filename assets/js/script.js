@@ -54,11 +54,22 @@ function getWeather(formValue) {
         .then(function (data) {
           weatherCards(data);
           var uvI = data.current.uvi;
+          var color = " "
+          if (uvI >=5) {
+            color = "red";
+          } else if (uvI < 5 & uvI > 2) {
+            color = "yellow";
+          } else {
+            color = "green";
+          }
           // uvIndex.textContent = lat;
-          uvIndex.textContent = "UV Index: "+ uvI;
+          uvIndex.textContent = "UV Index: "+ Math.round(uvI);
+          uvIndex.style.backgroundColor = color;
         });
       addWeatherData(currentCityWeatherName);
     });
+
+  
   // var currentDate;
   // fetch(endPoint)
   // .then((response)=> response.json())
@@ -93,6 +104,7 @@ function weatherCards(data) {
     var day = data.daily[i];
     // console.log(day);
     var card = document.createElement("div");
+    card.classList.add("forecastCard")
     // Do the same for all of these and add styling and labels!!
     var newTemp = document.createElement("h3");
   
