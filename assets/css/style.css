@@ -1,5 +1,9 @@
+.headline {
+  text-align: center;
+  color: brown;
+}
 .forecastCard {
-width: 15%;
+  width: 15%;
   margin: 20px;
   border: 3px solid black;
   border-radius: 10px;
@@ -7,6 +11,7 @@ width: 15%;
 .forecastContainer {
   display: flex;
 }
+
 /* .card-header {
     color: var(--primary);
     background-color: var(--dark);
