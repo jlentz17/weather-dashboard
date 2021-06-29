@@ -10,6 +10,12 @@
 }
 .forecastContainer {
   display: flex;
+  flex-wrap: wrap;
+}
+
+.dailyContainer {
+  border: 5px dotted purple;
+  border-radius: 7px;
 }
 
 /* .card-header {
