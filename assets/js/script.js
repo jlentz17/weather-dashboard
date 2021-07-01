@@ -7,6 +7,7 @@ var cityWind = document.querySelector(".cityWind");
 var cityHumidity = document.querySelector(".cityHumidity");
 var cityName = document.querySelector(".cityName");
 var forecastContainer = document.querySelector(".forecastContainer");
+var dailyContainer = document.querySelector(".dailyContainer");
 var uvIndex = document.querySelector(".uvi");
 var lat;
 var lon;
@@ -89,11 +90,15 @@ function getWeather(formValue) {
     var newTemp = Math.floor(((kelvinWeather - 273.15) * 9) / 5) + 32;
     // console.log(kelvinWeather)
     // How to make multiple lines???? I've tried commas, spaces, /n... and the data is all next to each other. Please help THX!!
+    
     cityName.textContent = currentCityWeatherName.name;
     cityTemp.textContent = "Temperature: " + newTemp + " ºF";
     cityWind.textContent =
-      "Wind Speed: " + Math.round(currentCityWeatherName.wind.speed) + "MPH";
+    "Wind Speed: " + Math.round(currentCityWeatherName.wind.speed) + "MPH";
     cityHumidity.textContent = "Humidity: " + currentCityWeatherName.main.humidity + "%";
+
+
+    document.querySelector(".dailyContainer").style.border = "4px solid black";
   }
   // var weatherDateEl = document.querySelector(".weatherDateEl");
   // weatherDateEl.textContent = currentDate
